@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "57733035-8b65-4f4e-b855-8c6b011c3afc": {
+      "ProjectGuid": "57733035-8b65-4f4e-b855-8c6b011c3afc",
+      "DisplayName": "Airport panel",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

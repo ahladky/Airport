@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airport panel", "Airport panel\Airport panel.csproj", "{57733035-8B65-4F4E-B855-8C6B011C3AFC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{57733035-8B65-4F4E-B855-8C6B011C3AFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57733035-8B65-4F4E-B855-8C6B011C3AFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57733035-8B65-4F4E-B855-8C6B011C3AFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57733035-8B65-4F4E-B855-8C6B011C3AFC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3B9A2882-FA46-4B23-86F1-C8EB920748B0}
+	EndGlobalSection
+EndGlobal
