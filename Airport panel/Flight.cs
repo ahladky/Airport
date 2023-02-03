@@ -21,6 +21,8 @@ public class Flight
 
     public Dictionary<string, ushort>? FlightsCost { get; set; }
 
+    public List<Passenger> PassengerList { get; set; } = new List<Passenger>();
+
     public Flight()
     {
 

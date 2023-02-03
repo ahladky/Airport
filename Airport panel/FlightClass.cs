@@ -12,3 +12,10 @@ public enum FlightClass
    ,business
 
 }
+
+public enum Sex
+{
+     male
+   , female
+
+}

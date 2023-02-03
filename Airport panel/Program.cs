@@ -27,7 +27,8 @@ class Program
         FlightsPanel.Add(new Flight("arrival", new DateTime(2023, 3, 1, 20, 0, 0), "MA01043", "UKR_KYIV", "AirBaltic", "D", FlightStatus.check_in, "A4", new Dictionary<string, ushort>() { { "Business Class", 220 } }));
         FlightsPanel.Add(new Flight("departure", new DateTime(2023, 3, 3, 21, 0, 0), "MA01044", "UA_KYIV", "BritishAir", "C", FlightStatus.delayed, "A1", new Dictionary<string, ushort>() { { "Business Class", 800 } }));
 
-
+        FlightsPanel[0].PassengerList.Add(new Passenger("Fname","Sname","ukr","DO09876", new DateOnly(1995, 5, 3),Sex.male,FlightClass.economy));
+        FlightsPanel[0].PassengerList.Add(new Passenger("Fname1", "Sname1", "ukr", "DO09888", new DateOnly(2000, 5, 3), Sex.female, FlightClass.business));
 
 
         long a;
@@ -525,7 +526,7 @@ class Program
             1. Airport panel
             2. Flights pricelist
             3. Passengers list
-            3. Search flight 
+            4. Search flight 
             ");
 
                             a = long.Parse(Console.ReadLine());
@@ -630,13 +631,52 @@ class Program
                                     };
                                 case 3: //Passengers list
                                     {
+                                        Console.Clear();
                                         do
                                         {
 
-                                            Console.WriteLine("Press Spacebar to exit; press any key to go start Navigation");
+                                            varToOut = 0;
+                                            flightIndex = -1;
+                                            Console.WriteLine("Enter flight number");
+                                            flight_number = Console.ReadLine();
+                                            flightIndex = FlightsPanel.FindIndex(c => c.Flight_number == flight_number);
+                                            if (flightIndex < 0)
+                                            {
+                                                Console.WriteLine("Flight not found");
+                                                Console.WriteLine("Press Spacebar to exit; press any key to try againe");
+                                                if (Console.ReadKey().Key == ConsoleKey.Spacebar)
+                                                {
+                                                    varToOut = 1;
+                                                    break;
+                                                }
+                                            }
                                         }
-                                        while (Console.ReadKey().Key != ConsoleKey.Spacebar);
+                                        while (flightIndex < 0);
                                         {
+                                            if (varToOut == 1)
+                                            {
+                                                break;
+                                            }
+                                            HeadTable();
+                                            FlightsPanelOne.Add(FlightsPanel[flightIndex]);
+                                            BodyTable(FlightsPanelOne);
+                                            Console.WriteLine("");
+                                            Console.WriteLine("");
+                                            Console.WriteLine("Flight passengers list: ");
+
+                                            foreach (var flight in FlightsPanelOne)
+                                            {
+                                                //foreach (var pl in flight.PassengerList)
+                                                //{
+                                                
+                                                HeadTablePassengers(Console.GetCursorPosition().Top + 1);
+                                                BodyTablePassengers(flight.PassengerList, Console.GetCursorPosition().Top + 1);
+                                                //}
+
+                                            }
+                                            Console.WriteLine("");
+                                            FlightsPanelOne.Clear();
+
                                         }
                                         break;
                                     };
@@ -702,6 +742,8 @@ class Program
         Console.SetCursorPosition(86, 0);
         Console.Write("| Gates ");
     }
+
+
     static void BodyTable(List<Flight> flightsPanel, string direction = null)
     {
         int i = 1;
@@ -728,6 +770,50 @@ class Program
                 i += 1;
             }
 
+        }
+    }
+
+    static void HeadTablePassengers(int i)
+    {
+        //Console.Clear();
+        Console.SetCursorPosition(0, i);
+        Console.Write("| FirstName ");
+        Console.SetCursorPosition(20, i);
+        Console.Write("| SecondName ");
+        Console.SetCursorPosition(40, i);
+        Console.Write("| Nationality ");
+        Console.SetCursorPosition(50, i);
+        Console.Write("| Passport ");
+        Console.SetCursorPosition(60, i);
+        Console.Write("| DateOfBirthday ");
+        Console.SetCursorPosition(75, i);
+        Console.Write("| Sex ");
+        Console.SetCursorPosition(85, i);
+        Console.Write("| FlightClass ");
+
+    }
+
+    static void BodyTablePassengers(List<Passenger> flightsPassengers, int curLine)
+    {
+        int i = 0 + curLine;
+        foreach (Passenger f in flightsPassengers)
+        {
+                Console.SetCursorPosition(0, i);
+                Console.Write("| " + f.FirstName + " ");
+                Console.SetCursorPosition(20, i);
+                Console.Write("| " + f.SecondName + " ");
+                Console.SetCursorPosition(40, i);
+                Console.Write("| " + f.Nationality + " ");
+                Console.SetCursorPosition(50, i);
+                Console.Write("| " + f.Passport + " ");
+                Console.SetCursorPosition(60, i);
+                Console.Write("| " + f.DateOfBirthday + " ");
+                Console.SetCursorPosition(75, i);
+                Console.Write("| " + f.Sex + " ");
+                Console.SetCursorPosition(85, i);
+                Console.Write("| " + f.FlightClass + " ");
+
+                i += 1;
         }
     }
 }

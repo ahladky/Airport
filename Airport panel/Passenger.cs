@@ -12,11 +12,11 @@ public class Passenger
     public string SecondName { get; set; }
     public string Nationality { get; set; }
     public string Passport { get; set; }
-    public string DateOfBirthday { get; set; }
-    public string Sex { get; set; }
+    public DateOnly DateOfBirthday { get; set; }
+    public Sex Sex { get; set; }
     public FlightClass FlightClass { get; set; }
 
-    public Passenger(string firstName, string secondName, string nationality, string passport, string dateOfBirthday, string sex, FlightClass flightClass)
+    public Passenger(string firstName, string secondName, string nationality, string passport, DateOnly dateOfBirthday, Sex sex, FlightClass flightClass)
     {
         FirstName = firstName;
         SecondName = secondName;
