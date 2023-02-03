@@ -27,8 +27,8 @@ class Program
         FlightsPanel.Add(new Flight("arrival", new DateTime(2023, 3, 1, 20, 0, 0), "MA01043", "UKR_KYIV", "AirBaltic", "D", FlightStatus.check_in, "A4", new Dictionary<string, ushort>() { { "Business Class", 220 } }));
         FlightsPanel.Add(new Flight("departure", new DateTime(2023, 3, 3, 21, 0, 0), "MA01044", "UA_KYIV", "BritishAir", "C", FlightStatus.delayed, "A1", new Dictionary<string, ushort>() { { "Business Class", 800 } }));
 
-        FlightsPanel[0].PassengerList.Add(new Passenger("Fname","Sname","ukr","DO09876", new DateOnly(1995, 5, 3),Sex.male,FlightClass.economy));
-        FlightsPanel[0].PassengerList.Add(new Passenger("Fname1", "Sname1", "ukr", "DO09888", new DateOnly(2000, 5, 3), Sex.female, FlightClass.business));
+        FlightsPanel[0].PassengerList.Add(new Passenger(1,"Fname","Sname","ukr","DO09876", new DateOnly(1995, 5, 3),Sex.male,FlightClass.economy));
+        FlightsPanel[0].PassengerList.Add(new Passenger(2,"Fname1", "Sname1", "ukr", "DO09888", new DateOnly(2000, 5, 3), Sex.female, FlightClass.business));
 
 
         long a;
@@ -37,7 +37,7 @@ class Program
         int flightIndex;
         int varToOut = 0;
         List<Flight> FlightsPanelOne = new List<Flight>();
-
+        List<Passenger> passes = new List<Passenger>();
         do
         {
 
@@ -620,7 +620,7 @@ class Program
                                                 {
                                                     Console.WriteLine("{0} - {1} $", dic.Key, dic.Value);
                                                 }
-
+                                                //break;
                                             }
                                             Console.WriteLine("");
                                             FlightsPanelOne.Clear();
@@ -631,6 +631,7 @@ class Program
                                     };
                                 case 3: //Passengers list
                                     {
+                                        
                                         Console.Clear();
                                         do
                                         {
@@ -663,7 +664,7 @@ class Program
                                             Console.WriteLine("");
                                             Console.WriteLine("");
                                             Console.WriteLine("Flight passengers list: ");
-
+                                            
                                             foreach (var flight in FlightsPanelOne)
                                             {
                                                 //foreach (var pl in flight.PassengerList)
@@ -672,12 +673,240 @@ class Program
                                                 HeadTablePassengers(Console.GetCursorPosition().Top + 1);
                                                 BodyTablePassengers(flight.PassengerList, Console.GetCursorPosition().Top + 1);
                                                 //}
+                                                passes = flight.PassengerList;
 
                                             }
                                             Console.WriteLine("");
+                                            //FlightsPanelOne.Clear();
+                                        }
+
+                                        do
+                                        {
+                                            Console.WriteLine(@"Do with flight passengers list:
+            1. Add passenger
+            2. Edit passenger
+            3. Delete passenger
+            4. Exit
+            ");
+                                            a = long.Parse(Console.ReadLine());
+                                            switch (a)
+                                            {
+                                                case 1: //Add passenger
+                                                    {
+                                                        
+                                                        Console.WriteLine("Enter ID: ");
+                                                        ushort id = ushort.Parse(Console.ReadLine());
+                                                        Console.WriteLine("Enter First Name: ");
+                                                        string firstName = Console.ReadLine();
+                                                        Console.WriteLine("Enter Second Name: ");
+                                                        string secondName = Console.ReadLine();
+                                                        Console.WriteLine("Enter Nationality: ");
+                                                        string nationality = Console.ReadLine();
+                                                        Console.WriteLine("Enter Passport: ");
+                                                        string passport = Console.ReadLine();
+                                                        Console.WriteLine("Enter DateOfBirthday (format dd.mm.yyyy): ");
+                                                        DateOnly dateOfBirthday = DateOnly.FromDateTime(DateTime.Now);
+                                                        try
+                                                        {
+                                                            dateOfBirthday = DateOnly.Parse(Console.ReadLine());
+                                                        }
+                                                        catch (Exception ex)
+                                                        {
+                                                            Console.WriteLine(ex.Message);
+                                                        }                                                        
+                                                        Console.WriteLine("Enter Sex (values - {0} / {1}): ",Sex.male,Sex.female);
+                                                        Sex sex;
+                                                        Enum.TryParse(Console.ReadLine(), out sex);
+                                                        Console.WriteLine("Enter FlightClass  (values - {0} / {1}): ", FlightClass.economy, FlightClass.business);
+                                                        FlightClass flightClass;
+                                                        Enum.TryParse(Console.ReadLine(), out flightClass);
+
+                                                        try 
+                                                        {
+                                                         FlightsPanel[flightIndex].PassengerList.Add(new Passenger(id, firstName, secondName, nationality, passport, dateOfBirthday, sex, flightClass));
+                                                         Console.WriteLine("Add passenger");
+                                                        }
+                                                        catch (Exception ex)
+                                                        {
+                                                            Console.WriteLine(ex.Message);
+                                                        }                                                        
+                                                        break;
+                                                    }
+                                                case 2: //Edit passenger
+                                                    {
+                                                        Passenger passenger = new Passenger();
+
+                                                        Console.WriteLine("");
+                                                        Console.WriteLine("Enter id passengers to start edit: ");
+                                                        a = long.Parse(Console.ReadLine());
+                                                        foreach (var f in passes)
+                                                        {
+                                                            if (f.ID == a)
+                                                            {
+                                                                passenger = f;
+                                                                break;
+                                                            }
+                                                        }
+
+
+                                                        Console.WriteLine(@"Edit passengers:
+            1. First Name
+            2. Second Name
+            3. Nationality
+            4. Passport
+            5. Date Of Birthday
+            6. Sex
+            7. FlightClass
+            8. Exit
+            ");
+                                                        a = long.Parse(Console.ReadLine());
+                                                        switch (a)
+                                                        {
+                                                            case 1:  // Edit First Name
+                                                                {
+                                                                    Console.WriteLine("Enter First Name: ");
+                                                                    string enterValue = Console.ReadLine();
+                                                                    passenger.EditFirstName(enterValue);
+                                                                    break;
+                                                                }
+
+                                                            case 2: // Edit Second Name
+                                                                {
+                                                                    Console.WriteLine("Enter Second Name: ");
+                                                                    string enterValue = Console.ReadLine();
+                                                                    passenger.EditSecondName(enterValue);
+                                                                    break;
+                                                                }
+                                                            case 3: // Edit Nationality
+                                                                {
+                                                                    Console.WriteLine("Enter Nationality: ");
+                                                                    string enterValue = Console.ReadLine();
+                                                                    passenger.EditNationality(enterValue);
+                                                                    break;
+                                                                }
+                                                            case 4: // Edit Passport
+                                                                {
+                                                                    Console.WriteLine("Enter Passport: ");
+                                                                    string enterValue = Console.ReadLine();
+                                                                    passenger.EditPassport(enterValue);
+                                                                    break;
+                                                                }
+                                                            case 5: // Edit Date Of Birthday
+                                                                {
+                                                                    Console.WriteLine("Enter DateOfBirthday (format dd.mm.yyyy): ");
+                                                                    DateOnly dateOfBirthday = DateOnly.FromDateTime(DateTime.Now);
+                                                                    try
+                                                                    {
+                                                                        dateOfBirthday = DateOnly.Parse(Console.ReadLine());
+                                                                    }
+                                                                    catch (Exception ex)
+                                                                    {
+                                                                        Console.WriteLine(ex.Message);
+                                                                    }
+                                                                    Console.WriteLine("Enter Date Of Birthday (format dd.mm.yyyy): ");
+                                                                    DateOnly dateOfBD = DateOnly.FromDateTime(DateTime.Now);
+                                                                    try
+                                                                    {
+                                                                        dateOfBD = DateOnly.Parse(Console.ReadLine());
+                                                                        passenger.EditDateOfBirthday(dateOfBD);
+                                                                    }
+                                                                    catch (Exception ex)
+                                                                    {
+                                                                        Console.WriteLine(ex.Message);
+                                                                    }
+                                                                    
+                                                                    break;
+                                                                }
+                                                            case 6: // Edit Sex
+                                                                {
+                                                                    Console.WriteLine("Enter Sex (values - {0} / {1}) (old value {2}): ", Sex.male, Sex.female,passenger.Sex);
+                                                                    try
+                                                                    {
+                                                                        Sex sex;
+                                                                        Enum.TryParse(Console.ReadLine(), out sex);
+                                                                        passenger.EditSex(sex);
+                                                                    }
+                                                                    catch (Exception ex)
+                                                                    {
+                                                                        Console.WriteLine(ex.Message);
+                                                                    }
+                                                                    break;
+                                                                }
+                                                            case 7: // Edit FlightClass
+                                                                {
+                                                                    Console.WriteLine("Enter FlightClass  (values - {0} / {1}) (old value {2}): ", FlightClass.economy, FlightClass.business, passenger.FlightClass);
+                                                                    try
+                                                                    {
+                                                                        FlightClass flightClass;
+                                                                        Enum.TryParse(Console.ReadLine(), out flightClass);
+                                                                        passenger.EditFlightClass(flightClass);
+                                                                    }
+                                                                    catch (Exception ex)
+                                                                    {
+                                                                        Console.WriteLine(ex.Message);
+                                                                    }
+                                                                    
+                                                                    
+                                                                    break;
+                                                                }
+                                                            case 8: // Exit
+                                                                {
+                                                                    goto startPoint;
+                                                                    break;
+                                                                }
+                                                        }
+
+
+                                                        List<Passenger> newList = new List<Passenger>();
+                                                        foreach (var f in passes)
+                                                        {
+                                                            if (f.ID == a)
+                                                            {
+                                                                newList.Add(passenger);                                                              
+                                                            }
+                                                            else
+                                                            {
+                                                                newList.Add(f);
+                                                            }
+                                                        }
+
+                                                        FlightsPanel[flightIndex].EditPassengerList(newList);
+
+                                                        Console.WriteLine("");
+                                                        break;
+                                                    }
+                                                case 3: //Delete passenger
+                                                    {
+
+                                                        Passenger passenger = new Passenger();
+
+                                                        Console.WriteLine("");
+                                                        Console.WriteLine("Enter id passengers to delete: ");
+                                                        a = long.Parse(Console.ReadLine());
+   
+                                                        List<Passenger> newList = new List<Passenger>();
+                                                        foreach (var f in passes)
+                                                        {
+                                                            if (f.ID != a)
+                                                            {
+                                                                newList.Add(f);
+                                                            }                                                            
+                                                        }
+                                                        FlightsPanel[flightIndex].EditPassengerList(newList);
+
+                                                        break;
+                                                    }
+                                            }
+
                                             FlightsPanelOne.Clear();
+                                            Console.WriteLine("Press Spacebar to exit; press any key to continue do with passengers list");
+                                        }
+                                        while (Console.ReadKey().Key != ConsoleKey.Spacebar);
+                                        {
 
                                         }
+
+                                        FlightsPanelOne.Clear();
                                         break;
                                     };
                                 case 4: //Search flight 
@@ -777,6 +1006,8 @@ class Program
     {
         //Console.Clear();
         Console.SetCursorPosition(0, i);
+        Console.Write("| id ");
+        Console.SetCursorPosition(4, i);
         Console.Write("| FirstName ");
         Console.SetCursorPosition(20, i);
         Console.Write("| SecondName ");
@@ -799,6 +1030,8 @@ class Program
         foreach (Passenger f in flightsPassengers)
         {
                 Console.SetCursorPosition(0, i);
+                Console.Write("| " + f.ID + " ");
+                Console.SetCursorPosition(4, i);
                 Console.Write("| " + f.FirstName + " ");
                 Console.SetCursorPosition(20, i);
                 Console.Write("| " + f.SecondName + " ");

@@ -74,5 +74,9 @@ public class Flight
     {
        Gates = gates;
     }
+    public void EditPassengerList(List<Passenger> passengerList)
+    {
+        PassengerList = passengerList;
+    }
 
 }
