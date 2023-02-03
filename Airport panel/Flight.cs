@@ -19,11 +19,13 @@ public class Flight
     public FlightStatus? Flight_status { get; set; }
     public string? Gates;
 
+    public Dictionary<string, ushort>? FlightsCost { get; set; }
+
     public Flight()
     {
 
     }
-    public Flight(string direction, DateTime dateTimeF, string flight_number, string city_arrival, string airline, string terminal, FlightStatus flight_status, string gates)
+    public Flight(string direction, DateTime dateTimeF, string flight_number, string city_arrival, string airline, string terminal, FlightStatus flight_status, string gates, Dictionary<string, ushort> flightsCost)
     {
         Direction = direction;
         DateTimeF = dateTimeF;
@@ -32,9 +34,11 @@ public class Flight
         Airline = airline;
         Terminal = terminal;
         Flight_status = flight_status;
+        FlightsCost = flightsCost;
         Gates = gates;
     }
    
+
 
     public void EditDirection(string direction)
     {
