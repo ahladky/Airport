@@ -526,7 +526,7 @@ class Program
             1. Airport panel
             2. Flights pricelist
             3. Passengers list
-            4. Search flight 
+            4. Search 
             ");
 
                             a = long.Parse(Console.ReadLine());
@@ -686,7 +686,7 @@ class Program
             1. Add passenger
             2. Edit passenger
             3. Delete passenger
-            4. Exit
+            4. Back
             ");
                                             a = long.Parse(Console.ReadLine());
                                             switch (a)
@@ -896,6 +896,11 @@ class Program
 
                                                         break;
                                                     }
+                                                case 4:
+                                                    {
+                                                        goto startPoint;
+                                                        //break;
+                                                    }
                                             }
 
                                             FlightsPanelOne.Clear();
@@ -911,10 +916,157 @@ class Program
                                     };
                                 case 4: //Search flight 
                                     {
+                                        Console.Clear();
+
                                         do
                                         {
+                                            Console.WriteLine(@"Search by:
+            1. Flight number
+            2. First or second name
+            3. Passport
+            4. Arrival(departure) port
+            5. Back
+            ");
+                                            a = long.Parse(Console.ReadLine());
+                                            switch (a)
+                                            {
+                                                case 1: // Flight number
+                                                    {
+                                                        do
+                                                        {
+                                                            varToOut = 0;
+                                                            flightIndex = -1;
+                                                            Console.WriteLine("Enter flight number you want search");
+                                                            flight_number = Console.ReadLine();
+                                                            flightIndex = FlightsPanel.FindIndex(c => c.Flight_number == flight_number);
+                                                            if (flightIndex < 0)
+                                                            {
+                                                                Console.WriteLine("Flight not found");
+                                                                Console.WriteLine("Press Spacebar to exit; press any key to try againe");
+                                                                if (Console.ReadKey().Key == ConsoleKey.Spacebar)
+                                                                {
+                                                                    varToOut = 1;
+                                                                    break;
+                                                                }
+                                                            }
+                                                        }
+                                                        while (flightIndex < 0);
+                                                        {
+                                                            if (varToOut == 1)
+                                                            {
+                                                                break;
+                                                            }
+                                                            HeadTable();
+                                                            FlightsPanelOne.Clear();
+                                                            FlightsPanelOne.Add(FlightsPanel[flightIndex]);
+                                                            BodyTable(FlightsPanelOne);
+                                                            Console.WriteLine("");
+                                                            FlightsPanelOne.Clear();
+                                                        }
 
-                                            Console.WriteLine("Press Spacebar to exit; press any key to go start Navigation");
+                                                        Console.WriteLine("");
+                                                        break;
+                                                    }
+                                                case 2: // First or second name
+                                                    {
+                                                        Console.WriteLine("Enter first or second name what you want search");
+                                                        string passenger_name = Console.ReadLine();
+                                                        int countFound = 0;
+                                                        List<Passenger> passenger_list = new List<Passenger>();
+                                                        foreach (var flight in FlightsPanel)
+                                                        {
+                                                            foreach (var passenger in flight.PassengerList)
+                                                            {
+                                                                if(passenger.FirstName == passenger_name || passenger.SecondName == passenger_name)
+                                                                {
+                                                                    passenger_list.Add(passenger);
+                                                                    countFound += 1;
+                                                                }
+                                                            }
+                                                            if (passenger_list.Count > 0)
+                                                            {
+                                                                Console.WriteLine("Flight number {0}", flight.Flight_number);
+                                                                HeadTablePassengers(Console.GetCursorPosition().Top + 1);
+                                                                BodyTablePassengers(passenger_list, Console.GetCursorPosition().Top + 1);
+                                                                Console.WriteLine("");
+                                                            }
+                                                           
+                                                            passenger_list.Clear();
+                                                        }
+                                                         if(countFound == 0)
+                                                        {
+                                                            Console.WriteLine("Not found!");
+                                                        }
+                                                          
+                                                        
+                                                        break;
+                                                    }
+                                                case 3: // Passport
+                                                    {
+                                                        Console.WriteLine("Enter passport what you want search");
+                                                        string passport = Console.ReadLine();
+                                                        int countFound = 0;
+                                                        List<Passenger> passenger_list = new List<Passenger>();
+                                                        foreach (var flight in FlightsPanel)
+                                                        {
+                                                            foreach (var passenger in flight.PassengerList)
+                                                            {
+                                                                if (passenger.Passport == passport)
+                                                                {
+                                                                    passenger_list.Add(passenger);
+                                                                    countFound += 1;
+                                                                }
+                                                            }
+                                                            if (passenger_list.Count > 0)
+                                                            {
+                                                                Console.WriteLine("Flight number {0}", flight.Flight_number);
+                                                                HeadTablePassengers(Console.GetCursorPosition().Top + 1);
+                                                                BodyTablePassengers(passenger_list, Console.GetCursorPosition().Top + 1);
+                                                                Console.WriteLine("");
+                                                            }
+                                                   
+                                                            passenger_list.Clear();
+                                                        }
+
+                                                        if (countFound == 0)
+                                                        {
+                                                            Console.WriteLine("Not found!");
+                                                        }
+                                                        break;
+                                                    }
+                                                case 4: // Arrival(departure) port
+                                                    {
+                                                        Console.WriteLine("Enter arrival(departure) port what you want search");
+                                                        string port = Console.ReadLine();
+                                                        int countFound = 0;
+                                                        FlightsPanelOne.Clear();
+                                                        foreach (var flight in FlightsPanel)
+                                                        {
+                                                            if(flight.City_arrival == port)
+                                                            {
+                                                               FlightsPanelOne.Add(flight);
+                                                                countFound += 1;
+                                                            }
+                                                        }
+                                                        if(FlightsPanelOne.Count > 0)
+                                                        {
+                                                            HeadTable();
+                                                            BodyTable(FlightsPanelOne);
+                                                        }
+                                                        if (countFound == 0)
+                                                        {
+                                                            Console.WriteLine("Not found!");
+                                                        }
+                                                        break;
+                                                    }
+                                                case 5:
+                                                    {
+                                                        goto startPoint;
+                                                        //break;
+                                                    }
+                                            }
+
+                                             Console.WriteLine("Press Spacebar to exit; press any key to choose search again");
                                         }
                                         while (Console.ReadKey().Key != ConsoleKey.Spacebar);
                                         {
@@ -922,7 +1074,8 @@ class Program
                                         break;
                                     };
                             }
-                                    Console.WriteLine("Press Spacebar to exit; press any key to go start Navigation");
+                            Console.WriteLine("");
+                            Console.WriteLine("Press Spacebar to exit; press any key to go start Navigation");
                         }
                             
                     
@@ -936,6 +1089,7 @@ class Program
                         break;
                     };
             }
+            Console.WriteLine("");
             Console.WriteLine("Press Spacebar to exit; press any key to go choose role");
 
         }
