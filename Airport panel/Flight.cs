@@ -8,7 +8,7 @@ namespace Airport_panel;
 
 
 
-public class Flight
+public class Flight : IComparable
 {
     public string? Direction { get; set; }
     public DateTime DateTimeF { get; set; }
@@ -20,8 +20,8 @@ public class Flight
     public string? Gates;
 
     public Dictionary<string, ushort>? FlightsCost { get; set; }
-
     public List<Passenger> PassengerList { get; set; } = new List<Passenger>();
+    public Dictionary<FlightClass, ushort[]>? PassengerListId { get; set; }
 
     public Flight()
     {
@@ -79,4 +79,42 @@ public class Flight
         PassengerList = passengerList;
     }
 
+    public int CompareTo(object? obj)
+    {
+        throw new NotImplementedException();
+    }
+
+    public int CompareToByFlightNum (string fl_num)
+    {
+        if (Flight_number == fl_num) 
+        {
+            return 0; 
+        }
+        else 
+        {
+            return -1;
+        }
+    }
+    public int CompareToByFlightPort(string fl_port)
+    {
+        if (City_arrival == fl_port)
+        {
+            return 0;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+    public int CompareToByFlight(Flight fl)
+    {
+        if (this == fl)
+        {
+            return 0;
+        }
+        else
+        {
+            return -1;
+        }
+    }
 }
