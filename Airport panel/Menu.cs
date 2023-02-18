@@ -26,7 +26,7 @@ public class Menu
     public void ShowMenu(bool clearConsole = true)
     {
         if(clearConsole) Console.Clear();
-        Console.SetWindowSize(100, 20);
+        Console.SetWindowSize(110, 30);
         Console.WriteLine(Text);
     }
 

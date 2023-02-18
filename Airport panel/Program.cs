@@ -147,7 +147,8 @@ class Program
 
        while(menuLevel >= 0)
         {
-           menuLevel = 0;
+            
+            menuLevel = 0;
            menuLine = "Start";
            cur_menu = GetMenu(menuLevel, menuLine);
            cur_menu.ShowMenu();
@@ -155,6 +156,7 @@ class Program
            a = long.Parse(Console.ReadLine());
             switch (a)
             {
+             
                 case 1:   //Passenger
                     {
                         menuLevel = 1;
@@ -184,7 +186,6 @@ class Program
                                             {
                                                 case 1: // All flight
                                                     {
-                                                        HeadTable();
                                                         BodyTable(FlightsPanel);
                                                         Console.WriteLine("");
                                                         Console.WriteLine("Press any key, to go back");
@@ -193,7 +194,6 @@ class Program
                                                     }
                                                 case 2: // Arrival flight
                                                     {
-                                                        HeadTable();
                                                         BodyTable(FlightsPanel, "arrival");
                                                         Console.WriteLine("");
                                                         Console.WriteLine("Press any key, to go back");
@@ -202,7 +202,6 @@ class Program
                                                     }
                                                 case 3: // Departure flight
                                                     {
-                                                        HeadTable();
                                                         BodyTable(FlightsPanel, "departure");
                                                         Console.WriteLine("");
                                                         Console.WriteLine("Press any key, to go back");
@@ -228,41 +227,19 @@ class Program
                                         HeadTable();
                                         BodyTable(FlightsPanel);
                                         Console.WriteLine("");
+                                        Console.WriteLine("Enter flight number you want to edit");
+                                        string fnumber = Console.ReadLine();
+                                        Flight findFlights = SearchByFlightNumber(FlightsPanel, fnumber).FirstOrDefault();
 
-                                        do
-                                        {
-                                            flightIndex = -1;
-                                            Console.WriteLine("Enter flight number you want to edit");
-                                            flight_number = Console.ReadLine();
-                                            flightIndex = FlightsPanel.FindIndex(c => c.Flight_number == flight_number);
-                                            if (flightIndex < 0)
-                                            {
-                                                Console.WriteLine("Flight not found");
-                                                Console.WriteLine("Press Spacebar to exit; press any key to continue");
+                                        menuLevel = 3;
+                                        menuLine = "PassengerEdit";
 
-                                                if (Console.ReadKey().Key == ConsoleKey.Spacebar)
-                                                {
-                                                    varToOut = 1;
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                        while (flightIndex < 0);
-                                        {
-                                            if (varToOut == 1)  break;
-                                            menuLevel = 3;
-                                            menuLine = "PassengerEdit";
-
-                                            //do
                                             while(menuLevel == 3)
                                             {
-                                                Console.WriteLine("Flight found");
                                                 Console.Clear();
-                                                HeadTable();
-                                                FlightsPanelOne.Add(FlightsPanel[flightIndex]);
-                                                BodyTable(FlightsPanelOne);
+                                                BodyTable(findFlights);
                                                 Console.WriteLine("");
-                                                Console.WriteLine(@"Select a field to edit Flight - {0}: ", flight_number);
+                                                Console.WriteLine(@"Select a field to edit Flight - {0}: ", fnumber);
                                                 
                                                 cur_menu = GetMenu(menuLevel, menuLine);
                                                 cur_menu.ShowMenu(false);
@@ -272,11 +249,11 @@ class Program
                                                 {
                                                     case 1:  // Edit Direction
                                                         {
-                                                            Console.WriteLine("Enter Direction new value (old value - {0}) (departure/arrival)", FlightsPanel[flightIndex].Direction);
+                                                            Console.WriteLine("Enter Direction new value (old value - {0}) (departure/arrival)", findFlights.Direction);
                                                             editValue = Console.ReadLine();
                                                             try
                                                             {
-                                                                FlightsPanel[flightIndex].EditDirection(editValue);
+                                                                 findFlights.EditDirection(editValue);
                                                                 Console.WriteLine("Direction changed!");
                                                             }
                                                             catch (Exception ex)
@@ -288,11 +265,11 @@ class Program
                                                         }
                                                     case 2:  // Edit DateTime Flight
                                                         {
-                                                            Console.WriteLine("Enter DateTime Flight new value (old value - {0})", FlightsPanel[flightIndex].DateTimeF);
+                                                            Console.WriteLine("Enter DateTime Flight new value (old value - {0})", findFlights.DateTimeF);
                                                             editValue = Console.ReadLine();
                                                             try
                                                             {
-                                                                FlightsPanel[flightIndex].EditDateTimeF(DateTime.Parse(editValue));
+                                                                findFlights.EditDateTimeF(DateTime.Parse(editValue));
                                                                 Console.WriteLine("DateTime Flight changed!");
                                                             }
                                                             catch (Exception ex)
@@ -304,11 +281,11 @@ class Program
                                                         }
                                                     case 3:  // Edit Flight number
                                                         {
-                                                            Console.WriteLine("Enter Flight number new value (old value - {0})", FlightsPanel[flightIndex].Flight_number);
+                                                            Console.WriteLine("Enter Flight number new value (old value - {0})", findFlights.Flight_number);
                                                             editValue = Console.ReadLine();
                                                             try
                                                             {
-                                                                FlightsPanel[flightIndex].EditFlight_number(editValue);
+                                                                findFlights.EditFlight_number(editValue);
                                                                 Console.WriteLine("Flight number changed!");
                                                             }
                                                             catch (Exception ex)
@@ -320,11 +297,11 @@ class Program
                                                         }
                                                     case 4:  // Edit City
                                                         {
-                                                            Console.WriteLine("Enter City arrival new value (old value - {0})", FlightsPanel[flightIndex].City_arrival);
+                                                            Console.WriteLine("Enter City arrival new value (old value - {0})", findFlights.City_arrival);
                                                             editValue = Console.ReadLine();
                                                             try
                                                             {
-                                                                FlightsPanel[flightIndex].EditCity_arrival(editValue);
+                                                                findFlights.EditCity_arrival(editValue);
                                                                 Console.WriteLine("City arrival changed!");
                                                             }
                                                             catch (Exception ex)
@@ -336,11 +313,11 @@ class Program
                                                         }
                                                     case 5:  // Edit Airline
                                                         {
-                                                            Console.WriteLine("Enter Airline new value (old value - {0})", FlightsPanel[flightIndex].Airline);
+                                                            Console.WriteLine("Enter Airline new value (old value - {0})", findFlights.Airline);
                                                             editValue = Console.ReadLine();
                                                             try
                                                             {
-                                                                FlightsPanel[flightIndex].EditAirline(editValue);
+                                                                findFlights.EditAirline(editValue);
                                                                 Console.WriteLine("Airline changed!");
                                                             }
                                                             catch (Exception ex)
@@ -352,11 +329,11 @@ class Program
                                                         }
                                                     case 6:  // Edit Terminal
                                                         {
-                                                            Console.WriteLine("Enter Terminal new value (old value - {0})", FlightsPanel[flightIndex].Terminal);
+                                                            Console.WriteLine("Enter Terminal new value (old value - {0})", findFlights.Terminal);
                                                             editValue = Console.ReadLine();
                                                             try
                                                             {
-                                                                FlightsPanel[flightIndex].EditTerminal(editValue);
+                                                                findFlights.EditTerminal(editValue);
                                                                 Console.WriteLine("Terminal changed!");
                                                             }
                                                             catch (Exception ex)
@@ -368,13 +345,13 @@ class Program
                                                         }
                                                     case 7: // Edit Flight status
                                                         {
-                                                            Console.WriteLine("Enter Flight status new value (old value - {0})", FlightsPanel[flightIndex].Flight_status);
+                                                            Console.WriteLine("Enter Flight status new value (old value - {0})", findFlights.Flight_status);
                                                             Console.WriteLine("check_in , gate_closed , arrived , departed_at , unknown , canceled , expected_at , delayed , in_flight");
                                                             try
                                                             {
                                                                 FlightStatus flightStatus;
                                                                 Enum.TryParse(Console.ReadLine(), out flightStatus);
-                                                                FlightsPanel[flightIndex].EditFlightStatus(flightStatus);
+                                                                findFlights.EditFlightStatus(flightStatus);
                                                                 Console.WriteLine("Flight status changed!");
                                                             }
                                                             catch (Exception ex)
@@ -386,11 +363,11 @@ class Program
                                                         }
                                                     case 8:  // Edit Gates
                                                         {
-                                                            Console.WriteLine("Enter Gates new value (old value - {0})", FlightsPanel[flightIndex].Gates);
+                                                            Console.WriteLine("Enter Gates new value (old value - {0})", findFlights.Gates);
                                                             editValue = Console.ReadLine();
                                                             try
                                                             {
-                                                                FlightsPanel[flightIndex].EditGates(editValue);
+                                                                findFlights.EditGates(editValue);
                                                                 Console.WriteLine("Gates changed!");
                                                             }
                                                             catch (Exception ex)
@@ -410,10 +387,7 @@ class Program
 
                                                 Console.WriteLine("");
                                                 FlightsPanelOne.Clear();
-                                               // Console.WriteLine("Press Spacebar to exit; press any key to continue edit Flight - {0}", flight_number);
                                             }
-                                           // while (Console.ReadKey().Key != ConsoleKey.Spacebar);
-                                        }
                                         break;
                                     }
                                 case 3: //Search flight 
@@ -434,158 +408,54 @@ class Program
                                                 case 1: //by the flight number
                                                     {
                                                         Console.Clear();
-                                                        do
-                                                        {
-                                                            varToOut = 0;
-                                                            flightIndex = -1;
-                                                            Console.WriteLine("Enter flight number you want search");
-                                                            flight_number = Console.ReadLine();
-                                                            flightIndex = FlightsPanel.FindIndex(c => c.Flight_number == flight_number);
-                                                            if (flightIndex < 0)
-                                                            {
-                                                                Console.WriteLine("Flight not found");
-                                                                Console.WriteLine("Press Spacebar to exit; press any key to try againe");
-                                                                if (Console.ReadKey().Key == ConsoleKey.Spacebar)
-                                                                {
-                                                                    varToOut = 1;
-                                                                    break;
-                                                                }
-                                                            }
-                                                        }
-                                                        while (flightIndex < 0);
-                                                        {
-                                                            if (varToOut == 1)
-                                                            {
-                                                                break;
-                                                            }
-                                                            HeadTable();
-                                                            FlightsPanelOne.Add(FlightsPanel[flightIndex]);
-                                                            BodyTable(FlightsPanelOne);
-                                                            Console.WriteLine("");
-                                                            FlightsPanelOne.Clear();
-
-                                                        }
-
+                                                        Console.WriteLine("Enter flight number you want search");
+                                                        flight_number = Console.ReadLine();
+                                                        BodyTable(SearchByFlightNumber(FlightsPanel, flight_number));                                                        
                                                         Console.WriteLine("");
+                                                        Console.WriteLine("Press any key, to go back");
+                                                        Console.ReadKey();                                                       
                                                         break;
                                                     }
                                                 case 2: //by date of arrival
-                                                    {
+                                                    {                                                        
                                                         Console.Clear();
-                                                        do
+                                                        Console.WriteLine("Enter flight date of arrival you want search");
+                                                        try 
                                                         {
-                                                            flightIndex = 0;
-                                                            Console.WriteLine("Enter flight date of arrival you want search");
-                                                            string search_text;
-                                                            search_text = Console.ReadLine();
-                                                            try
-                                                            {
-                                                                DateTime search_date = DateTime.Parse(search_text);
-                                                                foreach (Flight flight in FlightsPanel)
-                                                                {
-                                                                    if (flight.DateTimeF.Year == search_date.Year
-                                                                        && flight.DateTimeF.Month == search_date.Month
-                                                                        && flight.DateTimeF.Day == search_date.Day
-                                                                        && flight.Direction == "arrival")
-                                                                    {
-                                                                        FlightsPanelOne.Add(FlightsPanel[flightIndex]);
-                                                                    }
-                                                                    flightIndex += 1;
-                                                                }
-                                                                HeadTable();
-                                                                BodyTable(FlightsPanelOne);
-                                                                Console.WriteLine("");
-                                                                FlightsPanelOne.Clear();
-                                                            }
-                                                            catch (Exception ex)
-                                                            {
-                                                                Console.WriteLine(ex.Message);
-                                                            }
-                                                            Console.WriteLine("Press Spacebar to exit; press any key to try againe");
+                                                            DateTime date = DateTime.Parse(Console.ReadLine());                                                            
+                                                            BodyTable(SearchByDateArrival(FlightsPanel, date));
                                                         }
-                                                        while (Console.ReadKey().Key != ConsoleKey.Spacebar);
+                                                        catch (Exception ex)
+                                                        {
+                                                            Console.WriteLine(ex.Message);
+                                                        }
                                                         Console.WriteLine("");
+                                                        Console.WriteLine("Press any key, to go back");
+                                                        Console.ReadKey();
                                                         break;
                                                     }
                                                 case 3: //by arrival(departure) port
                                                     {
-                                                        do
-                                                        {
-                                                            Console.Clear();
-                                                            flightIndex = 0;
-                                                            Console.WriteLine("Enter arrival(departure) port you want search");
-                                                            flight_number = Console.ReadLine();
-                                                            foreach (Flight flight in FlightsPanel)
-                                                            {
-                                                                if (flight.City_arrival == flight_number)
-                                                                {
-                                                                    FlightsPanelOne.Add(FlightsPanel[flightIndex]);
-                                                                }
-                                                                flightIndex += 1;
-                                                            }
-                                                            if (FlightsPanelOne.Count > 0)
-                                                            {
-                                                                HeadTable();
-                                                                BodyTable(FlightsPanelOne);
-                                                            }
-                                                            else
-                                                            {
-                                                                Console.WriteLine("Flights not found");
-                                                            }
-                                                            Console.WriteLine("");
-                                                            FlightsPanelOne.Clear();
-
-                                                            Console.WriteLine("Press Spacebar to exit; press any key to try againe");
-                                                        }
-                                                        while (Console.ReadKey().Key != ConsoleKey.Spacebar);
+                                                        Console.Clear();
+                                                        Console.WriteLine("Enter arrival(departure) port you want search");
+                                                        string port = Console.ReadLine();
+                                                        BodyTable(SearchByPort(FlightsPanel, port));
                                                         Console.WriteLine("");
+                                                        Console.WriteLine("Press any key, to go back");
+                                                        Console.ReadKey();
+
                                                         break;
                                                     }
                                                 case 4: //by arrival(departure) port, nearest (1 hour) flight
                                                     {
-                                                        do
-                                                        {
-                                                            Console.Clear();
-                                                            flightIndex = 0;
-                                                            Console.WriteLine("Enter arrival(departure) port you want search");
-                                                            string search_text;
-                                                            search_text = Console.ReadLine();
-                                                            try
-                                                            {
-                                                                DateTime search_date = new DateTime(2023, 03, 01, 12, 00, 00);//DateTime.Now;
-                                                                foreach (Flight flight in FlightsPanel)
-                                                                {
-                                                                    if (flight.DateTimeF.Year == search_date.Year
-                                                                        && flight.DateTimeF.Month == search_date.Month
-                                                                        && flight.DateTimeF.Day == search_date.Day
-                                                                        && flight.DateTimeF.Hour >= search_date.Hour  // DateTime.Now.Hour
-                                                                        && flight.DateTimeF.Hour <= search_date.Hour + 1  // DateTime.Now.Hour+2
-                                                                        && flight.City_arrival == search_text)
-                                                                    {
-                                                                        FlightsPanelOne.Add(FlightsPanel[flightIndex]);
-                                                                    }
-                                                                    flightIndex += 1;
-                                                                }
-                                                                if (FlightsPanelOne.Count > 0)
-                                                                {
-                                                                    HeadTable();
-                                                                    BodyTable(FlightsPanelOne);
-                                                                }
-                                                                else
-                                                                {
-                                                                    Console.WriteLine("Flights not found");
-                                                                }
-                                                                Console.WriteLine("");
-                                                                FlightsPanelOne.Clear();
-                                                            }
-                                                            catch (Exception ex)
-                                                            {
-                                                                Console.WriteLine(ex.Message);
-                                                            }
-                                                            Console.WriteLine("Press Spacebar to exit; press any key to try againe");
-                                                        }
-                                                        while (Console.ReadKey().Key != ConsoleKey.Spacebar);
+                                                        Console.Clear();
+                                                        Console.WriteLine("Enter arrival(departure) port you want search neaster flight");
+                                                        string port = Console.ReadLine();
+                                                        DateTime search_date = new DateTime(2023, 03, 01, 12, 00, 00); //DateTime.Now
+                                                        BodyTable(SearchByNearestFlight(FlightsPanel, search_date, port,1));
                                                         Console.WriteLine("");
+                                                        Console.WriteLine("Press any key, to go back");
+                                                        Console.ReadKey();
                                                         break;
                                                     }
                                                 case 5: //Back
@@ -596,6 +466,7 @@ class Program
                                                         break;
                                                     }
                                             }
+
                                         }
 
                                         break;
@@ -725,7 +596,7 @@ class Program
                                             Console.Clear();
                                             Console.WriteLine("Enter flight number you want search");
                                             Flight findFlight = ViewFlightByNumber(Console.ReadLine(), FlightsPanel);
-                                            if (findFlight.Flight_number != "")
+                                            if (findFlight.Flight_number != "" && findFlight.Flight_number != null)
                                             {
                                                 ViewFlightPrices(findFlight);
                                             }
@@ -1300,82 +1171,58 @@ class Program
         Console.ReadLine();
         Environment.Exit(0);
 
+     
     }
 
 
+    static List<Flight> SearchByFlightNumber(List<Flight> flightsPanel,string flightNumber)
+    {
+        return flightsPanel.Where(flight => flight.Flight_number == flightNumber).ToList();
+    }
+    static List<Flight> SearchByDateArrival(List<Flight> flightsPanel, DateTime timeOfArrival)
+    {
+        return flightsPanel.Where(flight => flight.DateTimeF.Date == timeOfArrival.Date && flight.Direction == "arrival").ToList();
+    }
+
+    static List<Flight> SearchByPort(List<Flight> flightsPanel, string flightPort)
+    {
+        return flightsPanel.Where(flight => flight.City_arrival == flightPort).ToList();
+    }
+    static List<Flight> SearchByNearestFlight(List<Flight> flightsPanel, DateTime time, string port, ushort hour)
+    {
+        DateTime minTime = time.AddHours(-hour);
+        DateTime maxTime = time.AddHours(hour);
+
+        return flightsPanel.Where(flight => flight.DateTimeF >= minTime && flight.DateTimeF <= maxTime && flight.City_arrival == port)
+            .OrderBy(flight => flight.DateTimeF).ToList();
+    }
 
     static void HeadTable()
     {
         Console.Clear();
-        Console.SetCursorPosition(0, 0);
-        Console.Write("| Direction ");
-        Console.SetCursorPosition(12, 0);
-        Console.Write("| Date/time ");
-        Console.SetCursorPosition(36, 0);
-        Console.Write("| Number ");
-        Console.SetCursorPosition(46, 0);
-        Console.Write("| City ");
-        Console.SetCursorPosition(56, 0);
-        Console.Write("| Airline ");
-        Console.SetCursorPosition(66, 0);
-        Console.Write("| Terminal ");
-        Console.SetCursorPosition(76, 0);
-        Console.Write("| FlightStatus ");
-        Console.SetCursorPosition(86, 0);
-        Console.Write("| Gates ");
+        Console.WriteLine("|{0,-10}|{1,-18}|{2,-10}|{3,-10}|{4,-14}|{5,-10}|{6,-15}|{7,-5}|", "Direction", "Date/time", "Number", "City", "Airline", "Terminal", "FlightStatus", "Gates");
+        Console.WriteLine("|{0,-10}|{1,-18}|{2,-10}|{3,-10}|{4,-14}|{5,-10}|{6,-15}|{7,-5}|", "----------", "------------------", "----------", "----------", "--------------", "----------", "---------------", "-----");
     }
 
 
     static void BodyTable(List<Flight> flightsPanel, string direction = null)
     {
+        HeadTable();
         int i;
         foreach (Flight f in flightsPanel)
         {
             i = Console.GetCursorPosition().Top + 1;
             if (f.Direction == direction || direction == null)
-            {               
-                Console.SetCursorPosition(0, i);
-                Console.Write("| " + f.Direction + " ");
-                Console.SetCursorPosition(12, i);
-                Console.Write("| " + f.DateTimeF + " ");
-                Console.SetCursorPosition(36, i);
-                Console.Write("| " + f.Flight_number + " ");
-                Console.SetCursorPosition(46, i);
-                Console.Write("| " + f.City_arrival + " ");
-                Console.SetCursorPosition(56, i);
-                Console.Write("| " + f.Airline + " ");
-                Console.SetCursorPosition(66, i);
-                Console.Write("| " + f.Terminal + " ");
-                Console.SetCursorPosition(76, i);
-                Console.Write("| " + f.Flight_status + " ");
-                Console.SetCursorPosition(86, i);
-                Console.Write("| " + f.Gates);       
-                i +=1;
+            {
+                Console.WriteLine("|{0,-10}|{1,-18}|{2,-10}|{3,-10}|{4,-14}|{5,-10}|{6,-15}|{7,-5}|", f.Direction, f.DateTimeF.ToString("dd.MM.yyyy HH:mm"), f.Flight_number, f.City_arrival, f.Airline, f.Terminal, f.Flight_status, f.Gates);
             }
 
         }
     }
     static void BodyTable(Flight f)
     {
-        int i = Console.GetCursorPosition().Top + 1;
-        
-                Console.SetCursorPosition(0, i);
-                Console.Write("| " + f.Direction + " ");
-                Console.SetCursorPosition(12, i);
-                Console.Write("| " + f.DateTimeF + " ");
-                Console.SetCursorPosition(36, i);
-                Console.Write("| " + f.Flight_number + " ");
-                Console.SetCursorPosition(46, i);
-                Console.Write("| " + f.City_arrival + " ");
-                Console.SetCursorPosition(56, i);
-                Console.Write("| " + f.Airline + " ");
-                Console.SetCursorPosition(66, i);
-                Console.Write("| " + f.Terminal + " ");
-                Console.SetCursorPosition(76, i);
-                Console.Write("| " + f.Flight_status + " ");
-                Console.SetCursorPosition(86, i);
-                Console.Write("| " + f.Gates);
-                 
+        HeadTable();
+        Console.WriteLine("|{0,-10}|{1,-18}|{2,-10}|{3,-10}|{4,-14}|{5,-10}|{6,-15}|{7,-5}|", f.Direction, f.DateTimeF.ToString("dd.MM.yyyy HH:mm"), f.Flight_number, f.City_arrival, f.Airline, f.Terminal, f.Flight_status, f.Gates);        
     }
 
     static void HeadTablePassengers()
@@ -1447,10 +1294,11 @@ class Program
     }
     public static void ViewFlightPrices(Flight flight)
     {
-        foreach (var c in flight.FlightsCost)
-        {
-            Console.WriteLine("{0} - {1} $", c.Key, c.Value);
-        }
+            foreach (var c in flight.FlightsCost)
+            {
+                Console.WriteLine("{0} - {1} $", c.Key, c.Value);
+            }
+ 
     }
     public static int ViewFlightByPort(string fl_port, List<Flight> flights)
     {
