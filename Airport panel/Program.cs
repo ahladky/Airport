@@ -28,8 +28,7 @@ class Program
            curMenu = curMenu.GetMenu(curMenu.Level, curMenu.Line);
            curMenu.ShowMenu();
 
-           a = long.Parse(Console.ReadLine());
-            
+           a = long.Parse(Console.ReadLine());            
             switch (a)
             {             
                 case 1:   //Passenger
@@ -402,6 +401,7 @@ class Program
                                             foreach (FlightDB flight in findFlight)
                                             {
                                                 dbContext.OneFlightTable(flight.Flight_number);
+                                                Console.WriteLine("");
                                                 dbContext.ViewFlightPassegers(flight.Id);
                                             }
                                         }
@@ -443,7 +443,7 @@ class Program
                                                         {
                                                             dbContext.OnePassуgerTable(passenger.Id);
                                                             Console.WriteLine("Find flight: ");
-                                                            List<FlightDB> flights = dbContext.SearchByPassengerId(passenger.Id);
+                                                            List<FlightDB> flights = dbContext.SearchFlightByPassengerId(passenger.Id);
                                                             foreach (FlightDB flight in flights)
                                                             {
                                                                 dbContext.OneFlightTable(flight.Flight_number);
@@ -462,7 +462,7 @@ class Program
                                                         {
                                                             dbContext.OnePassуgerTable(passenger.Id);
                                                             Console.WriteLine("Find flight: ");
-                                                            List<FlightDB> flights = dbContext.SearchByPassengerId(passenger.Id);
+                                                            List<FlightDB> flights = dbContext.SearchFlightByPassengerId(passenger.Id);
                                                             foreach (FlightDB flight in flights)
                                                             {
                                                                 dbContext.OneFlightTable(flight.Flight_number);
@@ -491,153 +491,158 @@ class Program
                                     };
                                 case 6: //Passengers (add,edit,delete)
                                     {
-                                        //curMenu.Level = 3;
-                                        //curMenu.Line = "Passenger";
+                                        curMenu.Level = 3;
+                                        curMenu.Line = "Passenger";
 
-                                        //while (curMenu.Level == 3)
-                                        //{
-                                        //    Console.Clear();
-                                        //    curMenu.Level = 3;
-                                        //    curMenu.Line = "Passenger";
-                                        //    curMenu = curMenu.GetMenu(curMenu.Level, curMenu.Line);
-                                        //    curMenu.ShowMenu();
-
-
-                                        //    a = long.Parse(Console.ReadLine());
-                                        //    switch (a)
-                                        //    {
-                                        //        case 1:  //add Passenger
-                                        //            {
-
-                                        //                Console.WriteLine("");
-                                        //                Console.WriteLine("Press any key, to go back");
-                                        //                Console.ReadKey();
-                                        //                break;
-                                        //            }
-                                        //        case 2: //edit Passenger
-                                        //            {
-                                        //                BodyTablePassengers(PassengerList);                                                        
-                                        //                Console.WriteLine("Enter id passenger to edit");
-                                        //                ushort id_pass;
-                                        //                try
-                                        //                {
-                                        //                  id_pass = ushort.Parse(Console.ReadLine());
-                                        //                  Passenger passenger = SearchByPassengerId(PassengerList, id_pass);
-                                        //                  curMenu.Level = 4;
-                                        //                  curMenu = curMenu.GetMenu(curMenu.Level, curMenu.Line);
-                                        //                  curMenu.ShowMenu();
-                                        //                    a = long.Parse(Console.ReadLine());
-                                        //                    switch (a)
-                                        //                    {
-                                        //                        case 1:  // Edit First Name
-                                        //                            {
-                                        //                                Console.WriteLine("Enter First Name: ");
-                                        //                                string enterValue = Console.ReadLine();
-                                        //                                passenger.EditFirstName(enterValue);
-                                        //                                break;
-                                        //                            }
-                                        //                        case 2: // Edit Second Name
-                                        //                            {
-                                        //                                Console.WriteLine("Enter Second Name: ");
-                                        //                                string enterValue = Console.ReadLine();
-                                        //                                passenger.EditSecondName(enterValue);
-                                        //                                break;
-                                        //                            }
-                                        //                        case 3: // Edit Nationality
-                                        //                            {
-                                        //                                Console.WriteLine("Enter Nationality: ");
-                                        //                                string enterValue = Console.ReadLine();
-                                        //                                passenger.EditNationality(enterValue);
-                                        //                                break;
-                                        //                            }
-                                        //                        case 4: // Edit Passport
-                                        //                            {
-                                        //                                Console.WriteLine("Enter Passport: ");
-                                        //                                string enterValue = Console.ReadLine();
-                                        //                                passenger.EditPassport(enterValue);
-                                        //                                break;
-                                        //                            }
-                                        //                        case 5: // Edit Date Of Birthday
-                                        //                            {
-                                        //                                Console.WriteLine("Enter DateOfBirthday (format dd.mm.yyyy): ");
-                                        //                                DateOnly dateOfBirthday = DateOnly.FromDateTime(DateTime.Now);
-                                        //                                try
-                                        //                                {
-                                        //                                    dateOfBirthday = DateOnly.Parse(Console.ReadLine());
-                                        //                                }
-                                        //                                catch (Exception ex)
-                                        //                                {
-                                        //                                    Console.WriteLine(ex.Message);
-                                        //                                }
-                                        //                                Console.WriteLine("Enter Date Of Birthday (format dd.mm.yyyy): ");
-                                        //                                DateOnly dateOfBD = DateOnly.FromDateTime(DateTime.Now);
-                                        //                                try
-                                        //                                {
-                                        //                                    dateOfBD = DateOnly.Parse(Console.ReadLine());
-                                        //                                    passenger.EditDateOfBirthday(dateOfBD);
-                                        //                                }
-                                        //                                catch (Exception ex)
-                                        //                                {
-                                        //                                    Console.WriteLine(ex.Message);
-                                        //                                }
-
-                                        //                                break;
-                                        //                            }
-                                        //                        case 6: // Edit Sex
-                                        //                            {
-                                        //                                Console.WriteLine("Enter Sex (values - {0} / {1}) (old value {2}): ", Sex.male, Sex.female, passenger.Sex);
-                                        //                                try
-                                        //                                {
-                                        //                                    Sex sex;
-                                        //                                    Enum.TryParse(Console.ReadLine(), out sex);
-                                        //                                    passenger.EditSex(sex);
-                                        //                                }
-                                        //                                catch (Exception ex)
-                                        //                                {
-                                        //                                    Console.WriteLine(ex.Message);
-                                        //                                }
-                                        //                                break;
-                                        //                            }
-                                        //                        case 7:
-                                        //                            {
-                                        //                                curMenu.Level -= 1;
-                                        //                                curMenu = curMenu.GetMenu(curMenu.Level, curMenu.Line);
-                                        //                                curMenu.ShowMenu();
-                                        //                                break;
-                                        //                            }
-                                        //                    }
-
-                                        //                }
-                                        //                catch (Exception ex)
-                                        //                {
-                                        //                    Console.WriteLine(ex.Message);
-                                        //                }   
-                                        //                Console.WriteLine("");
-                                        //                Console.WriteLine("Press any key, to go back");
-                                        //                Console.ReadKey();
-                                        //                break;
-                                        //            }
-                                        //        case 3: //delete Passenger
-                                        //            {
-                                        //                BodyTablePassengers(PassengerList);
-                                        //                Console.WriteLine("");
-                                        //                Console.WriteLine("Press any key, to go back");
-                                        //                Console.ReadKey();
-                                        //                break;
-                                        //            }
-                                        //        case 4: // Back
-                                        //            {
-                                        //                curMenu.Level -= 1;
-                                        //                curMenu.Line = "Employee";
-                                        //                curMenu = curMenu.GetMenu(curMenu.Level, curMenu.Line);
-                                        //                curMenu.ShowMenu();
-                                        //                break;
-                                        //            }
-                                        //    }
+                                        while (curMenu.Level == 3)
+                                        {
+                                            Console.Clear();
+                                            curMenu.Level = 3;
+                                            curMenu.Line = "Passenger";
+                                            curMenu = curMenu.GetMenu(curMenu.Level, curMenu.Line);
+                                            curMenu.ShowMenu();
 
 
-                                        //}
-                                        break;
+                                            a = long.Parse(Console.ReadLine());
+                                            switch (a)
+                                            {
+                                                case 1:  //add Passenger
+                                                    {                                                       
+                                                        PassengerDB newPassenger = new PassengerDB();
+                                                        Console.WriteLine("Enter First Name");
+                                                        newPassenger.FirstName = Console.ReadLine();
+                                                        Console.WriteLine("Enter Second Name");
+                                                        newPassenger.SecondName = Console.ReadLine();
+                                                        Console.WriteLine("Enter Nationality");
+                                                        newPassenger.Nationality = Console.ReadLine();
+                                                        Console.WriteLine("Enter Passport");
+                                                        newPassenger.Passport = Console.ReadLine();
+                                                        Console.WriteLine("Enter DateOfBirthday (format dd.mm.yyyy)");
+                                                        try
+                                                        {
+                                                            newPassenger.DateOfBirthday = DateTime.Parse(Console.ReadLine() + " 00:00:00");                                                           
+                                                        }
+                                                        catch (Exception ex)
+                                                        {
+                                                            Console.WriteLine(ex.Message);
+                                                        }
+                                                        Console.WriteLine("Enter Sex (values - {0} / {1})", ListData.Sex.male, ListData.Sex.female);
+                                                        newPassenger.Sex = Console.ReadLine();
+                                                        dbContext.PassengerDB.Add(newPassenger);
+                                                        dbContext.SaveChanges();
+                                                        break;
+                                                    }
+                                                case 2: //edit Passenger
+                                                    {
+                                                        dbContext.ViewFlightPassegers();
+                                                        Console.WriteLine("Enter id passenger to edit");
+                                                        try
+                                                        {
+                                                            var passenger = dbContext.PassengerDB.FirstOrDefault(p => p.Id == int.Parse(Console.ReadLine()));
+
+                                                            curMenu.Level = 4;
+                                                            curMenu = curMenu.GetMenu(curMenu.Level, curMenu.Line);
+                                                            curMenu.ShowMenu();
+                                                            a = long.Parse(Console.ReadLine());
+                                                            switch (a)
+                                                            {
+                                                                case 1:  // Edit First Name
+                                                                    {
+                                                                        Console.WriteLine("Enter First Name: ");
+                                                                        passenger.FirstName = Console.ReadLine();
+                                                                        dbContext.SaveChanges();
+                                                                        break;
+                                                                    }
+                                                                case 2: // Edit Second Name
+                                                                    {
+                                                                        Console.WriteLine("Enter Second Name: ");
+                                                                        passenger.SecondName = Console.ReadLine();
+                                                                        dbContext.SaveChanges();
+                                                                        break;
+                                                                    }
+                                                                case 3: // Edit Nationality
+                                                                    {
+                                                                        Console.WriteLine("Enter Nationality: ");
+                                                                        passenger.Nationality = Console.ReadLine();
+                                                                        dbContext.SaveChanges();
+                                                                        break;
+                                                                    }
+                                                                case 4: // Edit Passport
+                                                                    {
+                                                                        Console.WriteLine("Enter Passport: ");
+                                                                        passenger.Passport = Console.ReadLine();
+                                                                        dbContext.SaveChanges();
+                                                                        break;
+                                                                    }
+                                                                case 5: // Edit Date Of Birthday
+                                                                    {
+                                                                        Console.WriteLine("Enter DateOfBirthday (format dd.mm.yyyy): ");
+                                                                        DateOnly dateOfBirthday = DateOnly.FromDateTime(DateTime.Now);
+                                                                        try
+                                                                        {
+                                                                            passenger.DateOfBirthday = DateTime.Parse(Console.ReadLine() + " 00:00:00");
+                                                                            dbContext.SaveChanges();
+                                                                        }
+                                                                        catch (Exception ex)
+                                                                        {
+                                                                            Console.WriteLine(ex.Message);
+                                                                        }                       
+                                                                        break;
+                                                                    }
+                                                                case 6: // Edit Sex
+                                                                    {
+                                                                        Console.WriteLine("Enter Sex (values - {0} / {1}) (old value {2}): ", ListData.Sex.male, ListData.Sex.female, passenger.Sex);
+                                                                        try
+                                                                        {
+                                                                            ListData.Sex sex;
+                                                                            Enum.TryParse(Console.ReadLine(), out sex);
+                                                                            passenger.Sex = sex.ToString();
+                                                                            dbContext.SaveChanges();
+                                                                        }
+                                                                        catch (Exception ex)
+                                                                        {
+                                                                            Console.WriteLine(ex.Message);
+                                                                        }
+                                                                        break;
+                                                                    }
+                                                                case 7:
+                                                                    {
+                                                                        curMenu.Level -= 1;
+                                                                        curMenu = curMenu.GetMenu(curMenu.Level, curMenu.Line);
+                                                                        curMenu.ShowMenu();
+                                                                        break;
+                                                                    }
+                                                                    
+                                                            }
+
+                                                        }
+                                                        catch (Exception ex)
+                                                        {
+                                                            Console.WriteLine(ex.Message);
+                                                        }
+                                                        GoBackText();
+                                                        break;
+                                                    }
+                                                case 3: //delete Passenger
+                                                    {
+                                                        dbContext.ViewFlightPassegers();
+                                                        Console.WriteLine("Enter id passenger to delete");
+                                                        var passenger = dbContext.PassengerDB.FirstOrDefault(p => p.Id == int.Parse(Console.ReadLine()));
+                                                        dbContext.PassengerDB.Remove(passenger);
+                                                        dbContext.SaveChanges();
+                                                        break;
+                                                    }
+                                                case 4: // Back
+                                                    {
+                                                        curMenu.Level -= 1;
+                                                        curMenu.Line = "Employee";
+                                                        curMenu = curMenu.GetMenu(curMenu.Level, curMenu.Line);
+                                                        curMenu.ShowMenu();
+                                                        break;
+                                                    }
+                                            }
+                                        }
+                                      break;
                                     }
                                 case 7: //Back
                                     {

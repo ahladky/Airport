@@ -116,17 +116,31 @@ public class MyDbContext : DbContext
         foreach (var p in passengerList)
         {
             HeadTablePassengers();
-            Console.WriteLine("|{0,-3}|{1,-15}|{2,-15}|{3,-11}|{4,-10}|{5,-16}|{6,-6}|", p.Id, p.FirstName, p.SecondName, p.Nationality, p.Passport, p.DateOfBirthday, p.Sex);
+            Console.WriteLine("|{0,-3}|{1,-15}|{2,-15}|{3,-11}|{4,-10}|{5,-16}|{6,-6}|", p.Id, p.FirstName, p.SecondName, p.Nationality, p.Passport, p.DateOfBirthday.Date, p.Sex);
         }
 
     }
-    public List<FlightDB> SearchByPassengerId (int idPassenger)
+    public void ViewFlightPassegers()
+    {
+        List<PassengerDB> passengerList = PassengerDB.ToList();
+        HeadTablePassengers();
+        foreach (var p in passengerList)
+        {            
+            Console.WriteLine("|{0,-3}|{1,-15}|{2,-15}|{3,-11}|{4,-10}|{5,-16}|{6,-6}|", p.Id, p.FirstName, p.SecondName, p.Nationality, p.Passport, p.DateOfBirthday.Date, p.Sex);
+        }
+
+    }
+    public List<FlightDB> SearchFlightByPassengerId (int idPassenger)
     {
         List<FlightDB> flightList = FligthPassengerListDB
                                         .Where(fp => fp.Id_passenger == idPassenger)
                                         .Select(f => f.FlightDB)
                                         .ToList();
         return flightList;
+    }
+    public PassengerDB SearchByPassengerId(int idPassenger)
+    {
+        return PassengerDB.Where(p => p.Id == idPassenger).SingleOrDefault();
     }
     public void OnePassуgerTable(int idPassenger)
     {

@@ -20,6 +20,4 @@ public class PassengerDB
 
     public ICollection<FligthPassengerListDB> FligthPassengerListsDB { get; set; }
 
-
-
 }
